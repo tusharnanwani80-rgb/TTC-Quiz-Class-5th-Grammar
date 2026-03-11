@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TTC Quiz</title>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<style>
+
+body{
+margin:0;
+font-family:"Segoe UI",sans-serif;
+background:#f7f6fa;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+}
+
+.app{
+width:400px;
+max-width:95%;
+}
+
+.card{
+background:white;
+padding:25px;
+border-radius:20px;
+box-shadow:0 15px 35px rgba(0,0,0,0.15);
+text-align:center;
+}
+
+.logo{
+width:85px;
+margin-bottom:10px;
+}
+
+.option{
+background:#f3f3f3;
+margin:8px 0;
+padding:12px;
+border-radius:12px;
+cursor:pointer;
+transition:0.25s;
+}
+
+.option:hover{transform:scale(1.04)}
+
+.correct{background:#c8f7c5}
+.wrong{background:#ffd0d0}
+
+.hidden{display:none}
+
+button{
+padding:12px 22px;
+border:none;
+border-radius:30px;
+cursor:pointer;
+font-size:15px;
+}
+
+.primary{
+background:#4fd1c5;
+color:white;
+}
+
+.share{
+background:#25D366;
+color:white;
+margin-top:10px;
+}
+
+.rating{
+background:#6c63ff;
+color:white;
+margin-top:10px;
+position:relative;
+overflow:hidden;
+}
+
+.progress{
+height:8px;
+background:#eee;
+border-radius:10px;
+margin-bottom:15px;
+}
+
+.bar{
+height:8px;
+background:#4fd1c5;
+width:0%;
+border-radius:10px;
+transition:0.4s;
+}
+
+.explanation{
+font-size:14px;
+margin-top:10px;
+color:#555;
+}
+
+.star{
+position:absolute;
+color:gold;
+font-size:12px;
+animation:starburst 800ms forwards;
+pointer-events:none;
+}
+
+@keyframes starburst{
+0%{opacity:1;transform:translate(0,0) scale(1)}
+100%{opacity:0;transform:translate(var(--x),var(--y)) scale(0)}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<div id="nameScreen" class="card">
+<img src="https://i.ibb.co/dsBdtCwK/Ttc-logo.png" class="logo">
+<h3>Enter Your Name</h3>
+
+<input id="username" placeholder="Your name"
+style="padding:10px;width:90%;border-radius:8px;border:1px solid #ccc">
+
+<br><br>
+
+<button class="primary" onclick="startWelcome()">Continue</button>
+</div>
+
+<div id="welcomeScreen" class="card hidden">
+
+<img src="https://i.ibb.co/dsBdtCwK/Ttc-logo.png" class="logo">
+
+<h2 id="welcomeText"></h2>
+
+<div>English Grammar Quiz</div>
+
+<br>
+
+<button class="primary" onclick="startQuiz()">Start Quiz</button>
+
+</div>
+
+<div id="quizScreen" class="card hidden">
+
+<img src="https://i.ibb.co/dsBdtCwK/Ttc-logo.png" class="logo">
+
+<div class="progress">
+<div class="bar" id="progressBar"></div>
+</div>
+
+<h3 id="question"></h3>
+
+<div id="options"></div>
+
+<div id="explanation" class="explanation"></div>
+
+<br>
+
+<button id="nextBtn" class="primary hidden" onclick="nextQuestion()">
+Next Question
+</button>
+
+</div>
+
+<div id="resultScreen" class="card hidden">
+
+<img src="https://i.ibb.co/dsBdtCwK/Ttc-logo.png" class="logo">
+
+<h2 id="scoreText"></h2>
+
+<div id="message"></div>
+
+<br>
+
+<button class="share" onclick="shareWhatsApp()">Share on WhatsApp</button>
+
+<button id="ratingBtn" class="rating">
+Click Me
+</button>
+
+<br><br>
+
+<button class="primary" onclick="restartQuiz()">Restart Quiz</button>
+
+<br><br>
+
+<script src="https://elfsightcdn.com/platform.js" async></script>
+<div class="elfsight-app-e87fdd6e-f4b8-4807-89b4-ecc80ca4f3c0" data-elfsight-app-lazy></div>
+
+</div>
+
+</div>
+
+<script>
+
+const subjectName="English"
+const chapterName="Grammar"
+
+let username=localStorage.getItem("ttc_name") || ""
+
+if(username){
+document.getElementById("username").value=username
+}
+
+const quiz=[
+
+{
+question:"What is the full form of TTC?",
+options:["The Tuition Centre","Technical Teaching Centre","Tushar Tuition Classes","Tushar Training Classes"],
+correctAnswer:"Tushar Tuition Classes",
+explanation:"TTC stands for Tushar Tuition Classes."
+},
+
+{
+question:"Choose the option that correctly expands the sentence 'The woman looked and then walked' using appropriate adverbs.",
+options:[
+"The woman looked beautifully and then walked heavy.",
+"The woman looking sadly and walked fastly.",
+"The woman slowly looked around twice and then walked away stealthily.",
+"The woman look quick and walked slow."
+],
+correctAnswer:"The woman slowly looked around twice and then walked away stealthily.",
+explanation:"Adverbs like 'slowly', 'twice', 'away', and 'stealthily' correctly modify the verbs."
+},
+
+{
+question:"Identify the interrogative adverb of manner.",
+options:["Where","When","Why","How"],
+correctAnswer:"How",
+explanation:"'How' asks about the manner in which an action is done."
+},
+
+{
+question:"Which sentence places the adverb of frequency correctly?",
+options:[
+"They play often cricket.",
+"Often they play cricket.",
+"They play cricket oftenly.",
+"They often play cricket."
+],
+correctAnswer:"They often play cricket.",
+explanation:"Adverbs of frequency usually come between subject and main verb."
+},
+
+{
+question:"Standard order when multiple adverbs appear together is:",
+options:[
+"Manner, Place, Time",
+"Place, Manner, Time",
+"Time, Place, Manner",
+"Manner, Time, Place"
+],
+correctAnswer:"Manner, Place, Time",
+explanation:"The usual order is manner → place → time."
+},
+
+{
+question:"Joanna can run _____ than Jerry.",
+options:["fastly","faster","more fast","most fast"],
+correctAnswer:"faster",
+explanation:"'Faster' is the comparative form of 'fast'."
+},
+
+{
+question:"Where is the adverb placed in 'I walked briskly.'?",
+options:[
+"Before the subject",
+"In the middle of the sentence",
+"Between the verb and object",
+"At the end of the sentence"
+],
+correctAnswer:"At the end of the sentence",
+explanation:"'Briskly' appears at the end describing how the action happened."
+},
+
+{
+question:"In 'You may meet me later', what type of adverb is 'later'?",
+options:[
+"Adverb of Time",
+"Adverb of Manner",
+"Adverb of Place",
+"Adverb of Degree"
+],
+correctAnswer:"Adverb of Time",
+explanation:"'Later' indicates time."
+},
+
+{
+question:"Which sentence uses a preposition of manner correctly?",
+options:[
+"He talked above difficulty.",
+"He talked with difficulty.",
+"He talked on difficulty.",
+"He talked at difficulty."
+],
+correctAnswer:"He talked with difficulty.",
+explanation:"'With difficulty' shows the manner."
+},
+
+{
+question:"Identify the object of the preposition in 'inside the cupboard'.",
+options:["inside","the","is","cupboard"],
+correctAnswer:"cupboard",
+explanation:"The noun at the end of a prepositional phrase is the object."
+},
+
+{
+question:"The horse jumped _____ the hedge.",
+options:["over","under","into","between"],
+correctAnswer:"over",
+explanation:"'Over' indicates movement across an obstacle."
+},
+
+{
+question:"Correct replacement: 'Mathew was running in the stairs.'",
+options:[
+"Change 'in' to 'at'",
+"Change 'because' to 'for'",
+"Change 'on' to 'in'",
+"Change 'in' to 'up'"
+],
+correctAnswer:"Change 'in' to 'up'",
+explanation:"We run 'up' or 'down' stairs."
+},
+
+{
+question:"She will leave for Kolkata by train _____ Thursday.",
+options:["on","at","in","from"],
+correctAnswer:"on",
+explanation:"'On' is used for specific days."
+},
+
+{
+question:"Due to heat the children sat _____ the umbrella.",
+options:["inside","below","behind","under"],
+correctAnswer:"under",
+explanation:"'Under' indicates directly beneath."
+},
+
+{
+question:"Jane and Jerry ran _____ the stairs.",
+options:["into","up","between","under"],
+correctAnswer:"up",
+explanation:"'Up' shows direction along stairs."
+},
+
+{
+question:"We can go to the circus, _____ we can go to the theatre.",
+options:["and","but","yet","or"],
+correctAnswer:"or",
+explanation:"'Or' shows choice."
+},
+
+{
+question:"Bring the salt _____ you go to the kitchen.",
+options:["although","while","if","unless"],
+correctAnswer:"if",
+explanation:"'If' introduces condition."
+},
+
+{
+question:"_____ you go to the party _____ you stay at home.",
+options:[
+"Both ... and",
+"Whether ... or",
+"Either ... or",
+"Hardly ... when"
+],
+correctAnswer:"Either ... or",
+explanation:"'Either...or' shows a choice."
+},
+
+{
+question:"Raj lost his balance when his bike skidded. Identify conjunction.",
+options:[
+"lost (correlative)",
+"his (coordinating)",
+"skidded (coordinating)",
+"when (subordinating)"
+],
+correctAnswer:"when (subordinating)",
+explanation:"'When' introduces a subordinate clause."
+},
+
+{
+question:"Study hard. You will not pass the test.",
+options:["and","or","but","yet"],
+correctAnswer:"or",
+explanation:"'Or' shows negative consequence."
+},
+
+{
+question:"No sooner had the bell rung _____ the students ran out.",
+options:["than","then","when","but"],
+correctAnswer:"than",
+explanation:"Correct pair: 'No sooner...than'."
+},
+
+{
+question:"Cause conjunction example:",
+options:[
+"I misbehaved in class, so I was punished.",
+"I misbehaved in class and I was punished.",
+"Because I misbehaved in class, I was punished.",
+"I was punished but I misbehaved in class."
+],
+correctAnswer:"Because I misbehaved in class, I was punished.",
+explanation:"'Because' expresses cause."
+},
+
+{
+question:"Why do we write 'an hour' but 'a house'?",
+options:[
+"'Hour' is uncountable.",
+"'House' is proper noun.",
+"No grammatical rule.",
+"'Hour' begins with vowel sound."
+],
+correctAnswer:"'Hour' begins with vowel sound.",
+explanation:"Articles depend on sound."
+},
+
+{
+question:"Zero article is used:",
+options:[
+"Before superlatives",
+"Before singular countable nouns",
+"Before uncountable nouns in general statements",
+"Before rivers"
+],
+correctAnswer:"Before uncountable nouns in general statements",
+explanation:"Example: Honey is good for health."
+},
+
+{
+question:"Natasha is _____ honest person.",
+options:["a","an","the","No article"],
+correctAnswer:"an",
+explanation:"'Honest' begins with vowel sound."
+},
+
+{
+question:"He hates watching _____ on television.",
+options:["the cricket","a cricket","cricket","an cricket"],
+correctAnswer:"cricket",
+explanation:"Sports names use zero article."
+},
+
+{
+question:"Is this _____ tiffin box?",
+options:["many","another","your","whose"],
+correctAnswer:"your",
+explanation:"Possessive determiner."
+},
+
+{
+question:"The puppy followed its mistress _____.",
+options:["everywhere","early","never","late"],
+correctAnswer:"everywhere",
+explanation:"Adverb of place."
+},
+
+{
+question:"There are _____ apples left.",
+options:["a little","much","any","a few"],
+correctAnswer:"a few",
+explanation:"'A few' is used with countable nouns."
+},
+
+{
+question:"Rule for separate possession:",
+options:[
+"Add 's to last name only",
+"Apostrophe without s",
+"Add 's to each name",
+"Use of"
+],
+correctAnswer:"Add 's to each name",
+explanation:"Example: Mona's and Simi's bags."
+},
+
+{
+question:"Meera went to bangalore for a job interview. Which word needs capital?",
+options:[
+"went",
+"job",
+"bangalore",
+"interview"
+],
+correctAnswer:"bangalore",
+explanation:"City names are proper nouns."
+},
+
+{
+question:"Correct punctuation:",
+options:[
+"This is a lovely painting, isnt it.",
+"This is a lovely painting isn't it?",
+"This is a lovely painting! isn't it?",
+"This is a lovely painting, isn't it?"
+],
+correctAnswer:"This is a lovely painting, isn't it?",
+explanation:"Comma before tag and question mark."
+},
+
+{
+question:"Correct sentence:",
+options:[
+"The cats collar was missing.",
+"The cat's collar was missing.",
+"The cats' collar was missing.",
+"The cat collar's was missing."
+],
+correctAnswer:"The cat's collar was missing.",
+explanation:"Apostrophe + s shows possession."
+},
+
+{
+question:"Its impossible to solve this problem.",
+options:[
+"Apostrophe in It's",
+"Comma after impossible",
+"Exclamation mark",
+"Inverted commas"
+],
+correctAnswer:"Apostrophe in It's",
+explanation:"It's = It is."
+},
+
+{
+question:"_____ do you bake a cake?",
+options:["Where","Why","How","When"],
+correctAnswer:"How",
+explanation:"'How' asks about method."
+},
+
+{
+question:"Madhabi read a book.",
+options:[
+"Simple sentence",
+"Compound sentence",
+"Complex sentence",
+"Interrogative sentence"
+],
+correctAnswer:"Simple sentence",
+explanation:"One subject and one predicate."
+},
+
+{
+question:"Which is a compound sentence?",
+options:[
+"After I cut the cake, I served it.",
+"I made a sandwich, and I ate it.",
+"She went because she was invited.",
+"Madhabi read a book."
+],
+correctAnswer:"I made a sandwich, and I ate it.",
+explanation:"Two independent clauses joined by 'and'."
+},
+
+{
+question:"After I cut the cake, I served it.",
+options:[
+"Simple sentence",
+"Compound sentence",
+"Complex sentence",
+"Exclamatory sentence"
+],
+correctAnswer:"Complex sentence",
+explanation:"Contains subordinate clause."
+},
+
+{
+question:"Since Naina was late, she entered through the back door.",
+options:[
+"she entered",
+"Since Naina was late",
+"through the back door",
+"Naina was late, she entered"
+],
+correctAnswer:"Since Naina was late",
+explanation:"Dependent clause."
+},
+
+{
+question:"The captain cancelled the flight, for he was warned of a storm.",
+options:[
+"Complex sentence",
+"Interrogative sentence",
+"Compound sentence",
+"Simple sentence"
+],
+correctAnswer:"Compound sentence",
+explanation:"Two independent clauses joined by 'for'."
+}
+
+]
+
+quiz.sort(()=>Math.random()-0.5)
+
+let questions=[]
+let index=0
+let score=0
+
+function startWelcome(){
+
+username=document.getElementById("username").value
+
+if(!username)return
+
+localStorage.setItem("ttc_name",username)
+
+document.getElementById("nameScreen").classList.add("hidden")
+document.getElementById("welcomeScreen").classList.remove("hidden")
+
+document.getElementById("welcomeText").innerText=
+"Welcome, TTC Champ "+username
+
+}
+
+function startQuiz(){
+
+document.getElementById("welcomeScreen").classList.add("hidden")
+document.getElementById("quizScreen").classList.remove("hidden")
+
+questions=[...quiz]
+
+loadQuestion()
+
+}
+
+function shuffle(arr){
+return arr.sort(()=>Math.random()-0.5)
+}
+
+function loadQuestion(){
+
+let q=questions[index]
+
+document.getElementById("question").innerText=q.question
+
+let opts=shuffle([...q.options])
+
+let container=document.getElementById("options")
+container.innerHTML=""
+
+opts.forEach(opt=>{
+
+let div=document.createElement("div")
+
+div.className="option"
+div.innerText=opt
+
+div.onclick=()=>selectOption(div,opt,q)
+
+container.appendChild(div)
+
+})
+
+document.getElementById("explanation").innerText=""
+document.getElementById("nextBtn").classList.add("hidden")
+
+document.getElementById("progressBar").style.width=
+(index/questions.length*100)+"%"
+
+}
+
+function selectOption(el,opt,q){
+
+let options=document.querySelectorAll(".option")
+options.forEach(o=>o.onclick=null)
+
+if(opt===q.correctAnswer){
+
+el.classList.add("correct")
+score++
+
+confetti({particleCount:80,spread:60})
+
+}else{
+
+el.classList.add("wrong")
+
+options.forEach(o=>{
+if(o.innerText===q.correctAnswer) o.classList.add("correct")
+})
+
+}
+
+document.getElementById("explanation").innerText=
+"Explanation: "+q.explanation
+
+document.getElementById("nextBtn").classList.remove("hidden")
+
+}
+
+function nextQuestion(){
+
+index++
+
+if(index>=questions.length){
+showResult()
+return
+}
+
+loadQuestion()
+
+}
+
+function showResult(){
+
+document.getElementById("quizScreen").classList.add("hidden")
+document.getElementById("resultScreen").classList.remove("hidden")
+
+document.getElementById("scoreText").innerText=
+score+" / "+questions.length
+
+let percent=(score/questions.length)*100
+
+let feedback=""
+
+if(percent>=90) feedback="Excellent performance!"
+else if(percent>=75) feedback="Very Good!"
+else if(percent>=50) feedback="Needs Practice."
+else feedback="Revise the chapter."
+
+document.getElementById("message").innerText=
+feedback+" Well done "+username+"!"
+
+confetti({particleCount:200,spread:120})
+
+}
+
+function shareWhatsApp(){
+
+let message=
+`TTC Quiz Result
+
+Student Name: ${username}
+
+Subject: ${subjectName}
+
+Chapter: ${chapterName}
+
+Quiz Score: ${score}/${questions.length}`
+
+let url="https://wa.me/?text="+encodeURIComponent(message)
+
+window.open(url)
+
+}
+
+function restartQuiz(){
+location.reload()
+}
+
+document.getElementById("ratingBtn").addEventListener("click",function(e){
+
+for(let i=0;i<12;i++){
+
+let star=document.createElement("div")
+star.className="star"
+star.innerText="★"
+
+let x=(Math.random()*120-60)+"px"
+let y=(Math.random()*-120)+"px"
+
+star.style.setProperty("--x",x)
+star.style.setProperty("--y",y)
+
+star.style.left="50%"
+star.style.top="50%"
+
+this.appendChild(star)
+
+setTimeout(()=>star.remove(),800)
+
+}
+
+setTimeout(()=>{
+window.open("https://g.page/r/CdUkswJ0ZulAEBE/review")
+},300)
+
+})
+
+</script>
+
+</body>
+  </html>
