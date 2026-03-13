@@ -3,471 +3,647 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TTC Quiz</title>
-
+<title>TTC Quiz – English Tenses</title>
+ 
+<link href="https://fonts.googleapis.com/css2?family=Righteous&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
+ 
 <style>
-
-body{
-margin:0;
-font-family:"Segoe UI",sans-serif;
-background:#f7f6fa;
-display:flex;
-justify-content:center;
-align-items:center;
-min-height:100vh;
+:root {
+  --blue:   #4361EE;
+  --orange: #FF6B35;
+  --lime:   #C8FF00;
+  --pink:   #FF3D8A;
+  --white:  #FFFFFF;
+  --off:    #F5F4FF;
+  --dark:   #111118;
+  --grey:   #6B6B80;
+  --light:  #EDEDF7;
+  --green:  #25D366;
 }
-
-.app{
-width:400px;
-max-width:95%;
+ 
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--off);
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent, transparent 18px,
+    rgba(67,97,238,0.045) 18px, rgba(67,97,238,0.045) 19px
+  );
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 0;
 }
-
-.card{
-background:white;
-padding:25px;
-border-radius:20px;
-box-shadow:0 15px 35px rgba(0,0,0,0.15);
-text-align:center;
+ 
+.app { width: 430px; max-width: 95vw; }
+ 
+/* ── Screens ── */
+.screen { display: none; }
+.screen.active {
+  display: block;
+  animation: popIn 0.42s cubic-bezier(.34,1.56,.64,1) forwards;
 }
-
-.logo{
-width:85px;
-margin-bottom:10px;
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.92) translateY(18px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0); }
 }
-
-.option{
-background:#f3f3f3;
-margin:8px 0;
-padding:12px;
-border-radius:12px;
-cursor:pointer;
-transition:0.25s;
+ 
+/* ── Card ── */
+.card {
+  background: var(--white);
+  border: 3px solid var(--dark);
+  border-radius: 24px;
+  padding: 32px 28px;
+  box-shadow: 8px 8px 0px var(--dark);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
 }
-
-.option:hover{transform:scale(1.04)}
-
-.correct{background:#c8f7c5}
-.wrong{background:#ffd0d0}
-
-.hidden{display:none}
-
-button{
-padding:12px 22px;
-border:none;
-border-radius:30px;
-cursor:pointer;
-font-size:15px;
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, var(--blue), var(--pink), var(--orange), var(--lime));
 }
-
-.primary{
-background:#4fd1c5;
-color:white;
+ 
+/* ── Logo ── */
+.logo {
+  width: 72px; height: 72px;
+  object-fit: contain;
+  border-radius: 50%;
+  border: 3px solid var(--dark);
+  box-shadow: 3px 3px 0 var(--dark);
+  margin-bottom: 14px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
-
-.share{
-background:#25D366;
-color:white;
-margin-top:10px;
+ 
+/* ── Chip ── */
+.chip {
+  display: inline-block;
+  background: var(--lime);
+  color: var(--dark);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 50px;
+  border: 2px solid var(--dark);
+  box-shadow: 2px 2px 0 var(--dark);
+  margin-bottom: 14px;
 }
-
-.rating{
-background:#6c63ff;
-color:white;
-margin-top:10px;
-position:relative;
-overflow:hidden;
+ 
+/* ── Type ── */
+h2 {
+  font-family: 'Righteous', cursive;
+  font-size: 28px;
+  color: var(--dark);
+  line-height: 1.2;
+  margin-bottom: 8px;
 }
-
-.progress{
-height:8px;
-background:#eee;
-border-radius:10px;
-margin-bottom:15px;
+p.sub { font-size: 14px; color: var(--grey); font-weight: 500; margin-bottom: 20px; }
+ 
+/* ── Input ── */
+.input-field {
+  width: 100%;
+  padding: 13px 16px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px; font-weight: 700;
+  color: var(--dark);
+  background: var(--off);
+  border: 2.5px solid var(--dark);
+  border-radius: 14px;
+  outline: none;
+  box-shadow: 3px 3px 0 var(--dark);
+  transition: box-shadow 0.15s, transform 0.15s, border-color 0.15s;
+  margin-bottom: 18px;
 }
-
-.bar{
-height:8px;
-background:#4fd1c5;
-width:0%;
-border-radius:10px;
-transition:0.4s;
+.input-field:focus {
+  box-shadow: 3px 3px 0 var(--blue);
+  border-color: var(--blue);
+  transform: translate(-1px,-1px);
 }
-
-.explanation{
-font-size:14px;
-margin-top:10px;
-color:#555;
+.input-field::placeholder { color: #aaa; font-weight: 500; }
+ 
+/* ── Buttons ── */
+.btn {
+  display: inline-block;
+  width: 100%;
+  padding: 14px 22px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px; font-weight: 800;
+  border: 2.5px solid var(--dark);
+  border-radius: 14px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  letter-spacing: 0.3px;
+  transition: transform 0.12s, box-shadow 0.12s;
+  box-shadow: 4px 4px 0 var(--dark);
+  margin-top: 10px;
 }
-
-.star{
-position:absolute;
-color:gold;
-font-size:12px;
-animation:starburst 800ms forwards;
-pointer-events:none;
+.btn:hover  { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--dark); }
+.btn:active { transform: translate(2px,2px);   box-shadow: 2px 2px 0 var(--dark); }
+ 
+.btn-blue   { background: var(--blue);   color: white; }
+.btn-lime   { background: var(--lime);   color: var(--dark); }
+.btn-pink   { background: var(--pink);   color: white; position: relative; overflow: hidden; }
+.btn-green  { background: var(--green);  color: white; }
+.btn-ghost  {
+  background: transparent; color: var(--grey);
+  border-color: var(--light); box-shadow: 4px 4px 0 var(--light);
 }
-
-@keyframes starburst{
-0%{opacity:1;transform:translate(0,0) scale(1)}
-100%{opacity:0;transform:translate(var(--x),var(--y)) scale(0)}
+.btn-ghost:hover { border-color: var(--dark); color: var(--dark); box-shadow: 4px 4px 0 var(--dark); }
+ 
+/* ── Info pills ── */
+.info-strip {
+  display: flex; flex-wrap: wrap;
+  justify-content: center; gap: 8px;
+  margin: 16px 0 22px;
 }
-
+.info-pill {
+  background: var(--off); border: 2px solid var(--dark);
+  border-radius: 50px; padding: 5px 14px;
+  font-size: 12px; font-weight: 700;
+  color: var(--dark); box-shadow: 2px 2px 0 var(--dark);
+}
+ 
+/* ── Progress ── */
+.progress-wrap { margin-bottom: 22px; }
+.progress-meta {
+  display: flex; justify-content: space-between;
+  font-size: 12px; font-weight: 800;
+  color: var(--dark); margin-bottom: 8px;
+  text-transform: uppercase; letter-spacing: 0.3px;
+}
+.progress-track {
+  height: 10px; background: var(--light);
+  border-radius: 50px; border: 2px solid var(--dark); overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--blue), var(--pink));
+  border-radius: 50px; width: 0%;
+  transition: width 0.5s cubic-bezier(.34,1.2,.64,1);
+}
+ 
+/* ── Question ── */
+.question-text {
+  font-family: 'Righteous', cursive;
+  font-size: 20px; color: var(--dark);
+  line-height: 1.5; margin-bottom: 20px;
+  min-height: 60px; text-align: left;
+}
+ 
+/* ── Options ── */
+.options-grid { display: flex; flex-direction: column; gap: 10px; text-align: left; }
+ 
+.option {
+  display: flex; align-items: center; gap: 12px;
+  padding: 13px 16px;
+  background: var(--white);
+  border: 2.5px solid var(--dark); border-radius: 14px;
+  cursor: pointer; font-size: 14px; font-weight: 700; color: var(--dark);
+  box-shadow: 3px 3px 0 var(--dark);
+  transition: transform 0.12s, box-shadow 0.12s, background 0.15s, border-color 0.15s;
+  animation: slideIn 0.3s cubic-bezier(.34,1.3,.64,1) backwards;
+}
+.option:nth-child(1) { animation-delay: 0.05s; }
+.option:nth-child(2) { animation-delay: 0.10s; }
+.option:nth-child(3) { animation-delay: 0.15s; }
+.option:nth-child(4) { animation-delay: 0.20s; }
+ 
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-14px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+ 
+.option:hover {
+  transform: translate(-2px,-2px);
+  box-shadow: 5px 5px 0 var(--blue);
+  border-color: var(--blue); background: #F0F3FF;
+}
+.option-letter {
+  width: 30px; height: 30px; border-radius: 9px;
+  background: var(--off); border: 2px solid var(--dark);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 800; flex-shrink: 0;
+  font-family: 'Righteous', cursive;
+  transition: background 0.15s, border-color 0.15s;
+}
+.option.correct {
+  background: #EAFFDA; border-color: #3DB838;
+  box-shadow: 3px 3px 0 #3DB838; transform: none;
+}
+.option.correct .option-letter { background: #3DB838; border-color: #3DB838; color: white; }
+.option.wrong {
+  background: #FFEAEA; border-color: var(--pink);
+  box-shadow: 3px 3px 0 var(--pink); transform: none;
+}
+.option.wrong .option-letter { background: var(--pink); border-color: var(--pink); color: white; }
+ 
+/* ── Explanation ── */
+.expl-box {
+  display: none; margin-top: 16px;
+  background: #FFFBE6; border: 2.5px solid var(--orange);
+  border-radius: 14px; padding: 13px 16px;
+  font-size: 13px; font-weight: 600; color: #6B4500;
+  text-align: left; line-height: 1.6;
+  box-shadow: 3px 3px 0 var(--orange);
+}
+.expl-box.show { display: block; animation: popIn 0.3s cubic-bezier(.34,1.3,.64,1); }
+.expl-tag {
+  font-family: 'Righteous', cursive; color: var(--orange);
+  font-size: 11px; letter-spacing: 1.5px;
+  text-transform: uppercase; display: block; margin-bottom: 4px;
+}
+ 
+/* ── Score ── */
+.score-block { margin: 10px 0 18px; }
+.score-number {
+  font-family: 'Righteous', cursive; font-size: 76px;
+  color: var(--blue); line-height: 1;
+  text-shadow: 4px 4px 0 var(--dark);
+}
+.score-denom { font-size: 20px; font-weight: 800; color: var(--grey); }
+.score-pct {
+  display: inline-block; margin-top: 6px;
+  font-size: 13px; font-weight: 800;
+  padding: 4px 16px; border-radius: 50px;
+  border: 2px solid var(--dark); box-shadow: 2px 2px 0 var(--dark);
+}
+ 
+/* ── Feedback box ── */
+.fb-box {
+  background: var(--off); border: 2.5px solid var(--dark);
+  border-radius: 16px; padding: 16px; margin: 14px 0;
+  box-shadow: 4px 4px 0 var(--dark); text-align: left;
+}
+.fb-box .fb-emoji { font-size: 28px; margin-bottom: 6px; display: block; }
+.fb-box strong {
+  font-family: 'Righteous', cursive; font-size: 18px;
+  color: var(--dark); display: block; margin-bottom: 4px;
+}
+.fb-box p { font-size: 13px; color: var(--grey); margin: 0; font-weight: 600; line-height: 1.5; }
+ 
+/* ── Divider ── */
+.divider {
+  display: flex; align-items: center; gap: 12px;
+  margin: 22px 0; color: var(--grey);
+  font-size: 11px; font-weight: 800;
+  letter-spacing: 1.5px; text-transform: uppercase;
+}
+.divider::before, .divider::after {
+  content: ''; flex: 1; height: 2px;
+  background: var(--light); border-radius: 2px;
+}
+ 
+/* ── Reviews head ── */
+.rev-head { margin-bottom: 16px; }
+.rev-head .r-emoji { font-size: 28px; margin-bottom: 8px; }
+.rev-head h3 { font-family: 'Righteous', cursive; font-size: 22px; color: var(--dark); margin-bottom: 4px; }
+.rev-head p { font-size: 12px; font-weight: 600; color: var(--grey); }
+ 
+/* ── Burst particles ── */
+.sburst {
+  position: absolute; font-size: 14px;
+  pointer-events: none;
+  animation: burstAnim 750ms forwards;
+}
+@keyframes burstAnim {
+  0%   { opacity: 1; transform: translate(0,0) scale(1.3) rotate(0deg); }
+  100% { opacity: 0; transform: translate(var(--bx),var(--by)) scale(0) rotate(180deg); }
+}
+ 
+.hidden { display: none !important; }
 </style>
 </head>
-
 <body>
-
+ 
 <div class="app">
-
-<!-- NAME SCREEN -->
-<div id="nameScreen" class="card">
-
-<img src="https://i.ibb.co/dsBdtCwK/Ttc-logo.png" class="logo">
-
-<h3>Enter Your Name</h3>
-
-<input id="username" placeholder="Your name"
-style="padding:10px;width:90%;border-radius:8px;border:1px solid #ccc">
-
-<br><br>
-
-<button class="primary" onclick="startWelcome()">Continue</button>
-
+ 
+  <!-- ══ NAME ══ -->
+  <div id="nameScreen" class="screen active">
+    <div class="card" style="display:flex;flex-direction:column;align-items:center;">
+      <img src="https://i.ibb.co/dsBdtCwK/Ttc-logo.png" class="logo" alt="TTC">
+      <div class="chip">✦ TTC Wardha</div>
+      <h2>Hey there!<br>What's your name?</h2>
+      <p class="sub">Enter your name to start the quiz 🎯</p>
+      <input id="username" class="input-field" type="text"
+        placeholder="Your full name..." autocomplete="off">
+      <button class="btn btn-blue" onclick="startWelcome()">Continue →</button>
+    </div>
+  </div>
+ 
+  <!-- ══ WELCOME ══ -->
+  <div id="welcomeScreen" class="screen">
+    <div class="card">
+      <img src="https://i.ibb.co/dsBdtCwK/Ttc-logo.png" class="logo" alt="TTC">
+      <div class="chip">✦ You're up!</div>
+      <h2 id="welcomeText"></h2>
+      <p class="sub">Ready to prove yourself? 💪</p>
+      <div class="info-strip">
+        <div class="info-pill">📖 English – Tenses</div>
+        <div class="info-pill">5 Questions</div>
+        <div class="info-pill">🏆 Scored</div>
+        <div class="info-pill">⏱ Self-paced</div>
+      </div>
+      <button class="btn btn-blue" onclick="startQuiz()">Start Quiz 🚀</button>
+    </div>
+  </div>
+ 
+  <!-- ══ QUIZ ══ -->
+  <div id="quizScreen" class="screen">
+    <div class="card">
+      <img src="https://i.ibb.co/dsBdtCwK/Ttc-logo.png" class="logo" alt="TTC">
+ 
+      <div class="progress-wrap">
+        <div class="progress-meta">
+          <span id="qCounter">Q 1 / 5</span>
+          <span id="qScore">Score: 0</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progressBar"></div>
+        </div>
+      </div>
+ 
+      <p class="question-text" id="question"></p>
+      <div class="options-grid" id="options"></div>
+ 
+      <div class="expl-box" id="explBox">
+        <span class="expl-tag">💡 Explanation</span>
+        <span id="explText"></span>
+      </div>
+ 
+      <br>
+      <button id="nextBtn" class="btn btn-blue hidden" onclick="nextQuestion()">
+        Next Question →
+      </button>
+    </div>
+  </div>
+ 
+  <!-- ══ RESULT ══ -->
+  <div id="resultScreen" class="screen">
+    <div class="card">
+      <img src="https://i.ibb.co/dsBdtCwK/Ttc-logo.png" class="logo" alt="TTC">
+      <div class="chip" id="resultChip">✦ Quiz Done!</div>
+ 
+      <div class="score-block">
+        <div>
+          <span class="score-number" id="scoreNum">0</span>
+          <span class="score-denom" id="scoreDenom">/5</span>
+        </div>
+        <div class="score-pct" id="scorePct">0%</div>
+      </div>
+ 
+      <div class="fb-box">
+        <span class="fb-emoji" id="fbEmoji"></span>
+        <strong id="fbTitle"></strong>
+        <p id="fbMsg"></p>
+      </div>
+ 
+      <button class="btn btn-green"  onclick="shareWhatsApp()">📤 Share on WhatsApp</button>
+      <button id="ratingBtn" class="btn btn-pink">⭐ Rate Us on Google</button>
+      <button class="btn btn-ghost"  onclick="restartQuiz()">↺ Try Again</button>
+ 
+      <div class="divider">What others say</div>
+ 
+      <div class="rev-head">
+        <div class="r-emoji">🌟</div>
+        <h3>Loved by TTC Families</h3>
+        <p>Real reviews from students &amp; parents across Wardha</p>
+      </div>
+ 
+      <a href="https://g.page/r/CdUkswJ0ZulAEBE/review" target="_blank"
+        class="btn btn-lime" style="display:block;text-align:center;">
+        ✍️ Give Us a Review
+      </a>
+ 
+      <div style="margin-top:20px;">
+        <div class="famewall-embed"
+          data-src="https---maps-app-goo-gl-CCkEWRVgjbvHpQmLA"
+          data-format="grid"
+          style="width:100%;min-height:300px;">
+        </div>
+        <script type="text/javascript" src="https://embed.famewall.io/frame.js" defer></script>
+      </div>
+ 
+    </div>
+  </div>
+ 
 </div>
-
-
-<!-- WELCOME -->
-<div id="welcomeScreen" class="card hidden">
-
-<img src="https://i.ibb.co/dsBdtCwK/Ttc-logo.png" class="logo">
-
-<h2 id="welcomeText"></h2>
-
-<div>English – Tenses Quiz</div>
-
-<br>
-
-<button class="primary" onclick="startQuiz()">Start Quiz</button>
-
-</div>
-
-
-<!-- QUIZ -->
-<div id="quizScreen" class="card hidden">
-
-<img src="https://i.ibb.co/dsBdtCwK/Ttc-logo.png" class="logo">
-
-<div class="progress">
-<div class="bar" id="progressBar"></div>
-</div>
-
-<h3 id="question"></h3>
-
-<div id="options"></div>
-
-<div id="explanation" class="explanation"></div>
-
-<br>
-
-<button id="nextBtn" class="primary hidden" onclick="nextQuestion()">
-Next Question
-</button>
-
-</div>
-
-
-<!-- RESULT -->
-<div id="resultScreen" class="card hidden">
-
-<img src="https://i.ibb.co/dsBdtCwK/Ttc-logo.png" class="logo">
-
-<h2 id="scoreText"></h2>
-
-<div id="message"></div>
-
-<br>
-
-<button class="share" onclick="shareWhatsApp()">Share on WhatsApp</button>
-
-<button id="ratingBtn" class="rating">
-Click Me
-</button>
-
-<br><br>
-
-<button class="primary" onclick="restartQuiz()">Restart Quiz</button>
-
-<br><br>
-
-<!-- Reviews Section -->
-<div style="margin-top:10px;padding:18px 0 10px;border-top:2px dashed #f0f0f0;">
-
-  <div style="font-size:22px;margin-bottom:6px;">🌟</div>
-
-  <h3 style="margin:0 0 6px;font-size:22px;font-family:'Georgia',serif;color:#2d2d2d;letter-spacing:-0.3px;">
-    Hear From Our Families
-  </h3>
-
-  <p style="font-size:13px;color:#999;font-style:italic;margin:0 0 14px;font-family:'Segoe UI',sans-serif;">
-    Trusted by students & parents across Wardha
-  </p>
-
-  <a href="https://g.page/r/CdUkswJ0ZulAEBE/review" target="_blank"
-    style="display:inline-block;text-decoration:none;background:linear-gradient(135deg,#f7971e,#ffd200);
-    color:#333;font-weight:700;font-size:14px;padding:11px 24px;border-radius:30px;
-    box-shadow:0 4px 14px rgba(247,151,30,0.35);letter-spacing:0.3px;margin-bottom:18px;">
-    ✍️ Give Us a Review
-  </a>
-
-</div>
-
-<!-- Famewall Google Reviews Widget -->
-<div class="famewall-embed" data-src="https---maps-app-goo-gl-CCkEWRVgjbvHpQmLA" data-format="grid" style="width:100%;min-height:300px;"></div>
-<script type="text/javascript" src="https://embed.famewall.io/frame.js" defer></script>
-
-</div>
-
-</div>
-
+ 
 <script>
-
-/* QUIZ META */
-const subjectName="English"
-const chapterName="Tenses"
-
-/* AUTO NAME */
-let username=localStorage.getItem("ttc_name") || ""
-
-if(username){
-document.getElementById("username").value=username
-}
-
-/* QUIZ DATA */
-const quizData=[
-{
-question:"She ____ to school every day.",
-options:["go","goes","going","gone"],
-correctIndex:1,
-explanation:"'She' is third person singular, so we use 'goes'."
-},
-{
-question:"I ____ my homework yesterday.",
-options:["did","do","done","doing"],
-correctIndex:0,
-explanation:"'Yesterday' indicates past tense."
-},
-{
-question:"They ____ playing football.",
-options:["is","am","are","be"],
-correctIndex:2,
-explanation:"Plural subject requires 'are'."
-},
-{
-question:"We ____ dinner now.",
-options:["eat","eats","are eating","ate"],
-correctIndex:2,
-explanation:"'Now' indicates present continuous."
-},
-{
-question:"He ____ a movie tomorrow.",
-options:["watch","watched","will watch","watching"],
-correctIndex:2,
-explanation:"Future tense uses 'will watch'."
-}
+const subjectName = "English"
+const chapterName = "Tenses"
+ 
+const quizData = [
+  {
+    question: "She ____ to school every day.",
+    options: ["go","goes","going","gone"],
+    correctIndex: 1,
+    explanation: "'She' is third-person singular — we add -s/es to the verb in simple present tense."
+  },
+  {
+    question: "I ____ my homework yesterday.",
+    options: ["did","do","done","doing"],
+    correctIndex: 0,
+    explanation: "'Yesterday' signals simple past. 'Did' is the past tense form of 'do'."
+  },
+  {
+    question: "They ____ playing football right now.",
+    options: ["is","am","are","be"],
+    correctIndex: 2,
+    explanation: "Plural subjects like 'they' use 'are' in present continuous tense."
+  },
+  {
+    question: "We ____ dinner at this moment.",
+    options: ["eat","eats","are eating","ate"],
+    correctIndex: 2,
+    explanation: "'At this moment' shows an ongoing action — use present continuous 'are eating'."
+  },
+  {
+    question: "He ____ a movie tomorrow evening.",
+    options: ["watch","watched","will watch","watching"],
+    correctIndex: 2,
+    explanation: "'Tomorrow' points to the future — 'will watch' is the correct future simple form."
+  }
 ]
-
-let questions=[]
-let index=0
-let score=0
-
-function shuffle(arr){
-return arr.sort(()=>Math.random()-0.5)
-}
-
-function startWelcome(){
-
-username=document.getElementById("username").value
-
-if(!username)return
-
-localStorage.setItem("ttc_name",username)
-
-document.getElementById("nameScreen").classList.add("hidden")
-document.getElementById("welcomeScreen").classList.remove("hidden")
-
-document.getElementById("welcomeText").innerText=
-"Welcome, TTC Champ "+username
-
-}
-
-function startQuiz(){
-
-document.getElementById("welcomeScreen").classList.add("hidden")
-document.getElementById("quizScreen").classList.remove("hidden")
-
-questions=shuffle([...quizData])
-
-loadQuestion()
-
-}
-
-function loadQuestion(){
-
-let q=questions[index]
-
-document.getElementById("question").innerText=q.question
-
-let opts=shuffle([...q.options])
-
-let container=document.getElementById("options")
-container.innerHTML=""
-
-opts.forEach(opt=>{
-
-let div=document.createElement("div")
-
-div.className="option"
-div.innerText=opt
-
-div.onclick=()=>selectOption(div,opt,q)
-
-container.appendChild(div)
-
+ 
+let username = localStorage.getItem("ttc_name") || ""
+let questions = [], index = 0, score = 0
+const letters = ["A","B","C","D"]
+ 
+if (username) document.getElementById("username").value = username
+ 
+document.getElementById("username").addEventListener("keydown", e => {
+  if (e.key === "Enter") startWelcome()
 })
-
-document.getElementById("explanation").innerText=""
-document.getElementById("nextBtn").classList.add("hidden")
-
-document.getElementById("progressBar").style.width=
-(index/questions.length*100)+"%"
-
+ 
+function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5) }
+ 
+function show(id) {
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"))
+  const el = document.getElementById(id)
+  el.classList.remove("active")
+  void el.offsetWidth
+  el.classList.add("active")
 }
-
-function selectOption(el,opt,q){
-
-let options=document.querySelectorAll(".option")
-
-options.forEach(o=>o.onclick=null)
-
-let correct=q.options[q.correctIndex]
-
-if(opt===correct){
-
-el.classList.add("correct")
-score++
-
-confetti({particleCount:80,spread:60})
-
-}else{
-
-el.classList.add("wrong")
-
-options.forEach(o=>{
-if(o.innerText===correct) o.classList.add("correct")
+ 
+function startWelcome() {
+  username = document.getElementById("username").value.trim()
+  if (!username) {
+    const inp = document.getElementById("username")
+    inp.style.borderColor = "var(--pink)"
+    inp.style.boxShadow = "3px 3px 0 var(--pink)"
+    inp.placeholder = "Please enter your name! 👆"
+    inp.focus()
+    return
+  }
+  localStorage.setItem("ttc_name", username)
+  document.getElementById("welcomeText").innerText = "Let's go, " + username + "!"
+  show("welcomeScreen")
+}
+ 
+function startQuiz() {
+  questions = shuffle(quizData)
+  index = 0; score = 0
+  show("quizScreen")
+  loadQuestion()
+}
+ 
+function loadQuestion() {
+  const q = questions[index]
+  const opts = shuffle(q.options)
+ 
+  document.getElementById("qCounter").innerText = `Q ${index+1} / ${questions.length}`
+  document.getElementById("qScore").innerText = `Score: ${score}`
+  document.getElementById("progressBar").style.width = ((index / questions.length) * 100) + "%"
+  document.getElementById("question").innerText = q.question
+ 
+  const container = document.getElementById("options")
+  container.innerHTML = ""
+  opts.forEach((opt, i) => {
+    const div = document.createElement("div")
+    div.className = "option"
+    div.innerHTML = `<span class="option-letter">${letters[i]}</span><span class="opt-text">${opt}</span>`
+    div.onclick = () => selectOption(div, opt, q)
+    container.appendChild(div)
+  })
+ 
+  document.getElementById("explBox").classList.remove("show")
+  document.getElementById("explText").innerText = ""
+  document.getElementById("nextBtn").classList.add("hidden")
+}
+ 
+function selectOption(el, opt, q) {
+  document.querySelectorAll(".option").forEach(o => o.onclick = null)
+  const correct = q.options[q.correctIndex]
+ 
+  if (opt === correct) {
+    el.classList.add("correct")
+    score++
+    confetti({
+      particleCount: 100, spread: 70, origin: { y: 0.55 },
+      colors: ["#4361EE","#C8FF00","#FF3D8A","#FF6B35","#ffffff"]
+    })
+  } else {
+    el.classList.add("wrong")
+    document.querySelectorAll(".option").forEach(o => {
+      if (o.querySelector(".opt-text")?.innerText.trim() === correct) o.classList.add("correct")
+    })
+  }
+ 
+  document.getElementById("explText").innerText = q.explanation
+  document.getElementById("explBox").classList.add("show")
+  document.getElementById("qScore").innerText = `Score: ${score}`
+  document.getElementById("nextBtn").classList.remove("hidden")
+}
+ 
+function nextQuestion() {
+  index++
+  if (index >= questions.length) { showResult(); return }
+  loadQuestion()
+}
+ 
+function showResult() {
+  show("resultScreen")
+  const pct = Math.round((score / questions.length) * 100)
+ 
+  document.getElementById("scoreNum").innerText = score
+  document.getElementById("scoreDenom").innerText = `/${questions.length}`
+  document.getElementById("scorePct").innerText = pct + "%"
+ 
+  let emoji, title, msg, chipText, pctBg
+ 
+  if (pct >= 90) {
+    emoji = "🔥"; title = "Absolutely Smashed It!"; pctBg = "#EAFFDA"
+    msg = "Perfect! You clearly know your tenses, " + username + ". Top of the class!"
+    chipText = "✦ Outstanding"
+  } else if (pct >= 75) {
+    emoji = "💪"; title = "Really Well Done!"; pctBg = "#E0F0FF"
+    msg = "Strong performance, " + username + "! A little more practice and you'll be perfect."
+    chipText = "✦ Well Done"
+  } else if (pct >= 50) {
+    emoji = "📚"; title = "Good Effort!"; pctBg = "#FFF8DC"
+    msg = "You're on the right track, " + username + ". Keep revising and you'll ace it!"
+    chipText = "✦ Keep Going"
+  } else {
+    emoji = "🧐"; title = "Time to Revise!"; pctBg = "#FFEAEA"
+    msg = "Don't worry, " + username + " — go through the chapter once more and try again!"
+    chipText = "✦ Try Again"
+  }
+ 
+  document.getElementById("fbEmoji").innerText = emoji
+  document.getElementById("fbTitle").innerText = title
+  document.getElementById("fbMsg").innerText = msg
+  document.getElementById("resultChip").innerText = chipText
+  document.getElementById("scorePct").style.background = pctBg
+ 
+  confetti({
+    particleCount: 180, spread: 110, origin: { y: 0.45 },
+    colors: ["#4361EE","#C8FF00","#FF3D8A","#FF6B35","#ffffff"]
+  })
+}
+ 
+function shareWhatsApp() {
+  const msg =
+`🎓 *TTC Quiz Result*
+ 
+👤 *Student:* ${username}
+📘 *Subject:* ${subjectName}
+📖 *Chapter:* ${chapterName}
+🏆 *Score:* ${score}/${questions.length}
+ 
+_Tushar Tuition Classes, Wardha_ 📚`
+  window.open("https://wa.me/?text=" + encodeURIComponent(msg))
+}
+ 
+function restartQuiz() { location.reload() }
+ 
+document.getElementById("ratingBtn").addEventListener("click", function () {
+  for (let i = 0; i < 16; i++) {
+    const s = document.createElement("span")
+    s.className = "sburst"
+    s.innerText = ["★","✦","●","▲"][Math.floor(Math.random()*4)]
+    s.style.color = ["#C8FF00","#FF6B35","#4361EE","#FF3D8A"][Math.floor(Math.random()*4)]
+    s.style.setProperty("--bx", (Math.random()*160-80)+"px")
+    s.style.setProperty("--by", (Math.random()*-150)+"px")
+    s.style.left = (35 + Math.random()*30) + "%"
+    s.style.top = "50%"
+    this.appendChild(s)
+    setTimeout(() => s.remove(), 750)
+  }
+  setTimeout(() => window.open("https://g.page/r/CdUkswJ0ZulAEBE/review"), 320)
 })
-
-}
-
-document.getElementById("explanation").innerText=
-"Explanation: "+q.explanation
-
-document.getElementById("nextBtn").classList.remove("hidden")
-
-}
-
-function nextQuestion(){
-
-index++
-
-if(index>=questions.length){
-showResult()
-return
-}
-
-loadQuestion()
-
-}
-
-function showResult(){
-
-document.getElementById("quizScreen").classList.add("hidden")
-document.getElementById("resultScreen").classList.remove("hidden")
-
-document.getElementById("scoreText").innerText=
-score+" / "+questions.length
-
-let percent=(score/questions.length)*100
-
-let feedback=""
-
-if(percent>=90) feedback="Excellent performance!"
-else if(percent>=75) feedback="Very Good!"
-else if(percent>=50) feedback="Needs Practice."
-else feedback="Revise the chapter."
-
-document.getElementById("message").innerText=
-feedback+" Well done "+username+"!"
-
-confetti({particleCount:200,spread:120})
-
-}
-
-function shareWhatsApp(){
-
-let message=
-`TTC Quiz Result
-
-Student Name: ${username}
-
-Subject: ${subjectName}
-
-Chapter: ${chapterName}
-
-Quiz Score: ${score}/${questions.length}`
-
-let url="https://wa.me/?text="+encodeURIComponent(message)
-
-window.open(url)
-
-}
-
-function restartQuiz(){
-location.reload()
-}
-
-/* STAR PARTICLE BUTTON */
-document.getElementById("ratingBtn").addEventListener("click",function(e){
-
-for(let i=0;i<12;i++){
-
-let star=document.createElement("div")
-star.className="star"
-star.innerText="★"
-
-let x=(Math.random()*120-60)+"px"
-let y=(Math.random()*-120)+"px"
-
-star.style.setProperty("--x",x)
-star.style.setProperty("--y",y)
-
-star.style.left="50%"
-star.style.top="50%"
-
-this.appendChild(star)
-
-setTimeout(()=>star.remove(),800)
-
-}
-
-setTimeout(()=>{
-window.open("https://g.page/r/CdUkswJ0ZulAEBE/review")
-},300)
-
-})
-
 </script>
-
+ 
 </body>
 </html>
