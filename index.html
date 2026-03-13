@@ -350,8 +350,8 @@ p.sub { font-size: 14px; color: var(--grey); font-weight: 500; margin-bottom: 20
       <h2 id="welcomeText"></h2>
       <p class="sub">Ready to prove yourself? 💪</p>
       <div class="info-strip">
-        <div class="info-pill">📖 English – Tenses</div>
-        <div class="info-pill">5 Questions</div>
+        <div class="info-pill">📖 English – Mixed</div>
+        <div class="info-pill">26 Questions</div>
         <div class="info-pill">🏆 Scored</div>
         <div class="info-pill">⏱ Self-paced</div>
       </div>
@@ -366,7 +366,7 @@ p.sub { font-size: 14px; color: var(--grey); font-weight: 500; margin-bottom: 20
  
       <div class="progress-wrap">
         <div class="progress-meta">
-          <span id="qCounter">Q 1 / 5</span>
+          <span id="qCounter">Q 1 / 26</span>
           <span id="qScore">Score: 0</span>
         </div>
         <div class="progress-track">
@@ -398,7 +398,7 @@ p.sub { font-size: 14px; color: var(--grey); font-weight: 500; margin-bottom: 20
       <div class="score-block">
         <div>
           <span class="score-number" id="scoreNum">0</span>
-          <span class="score-denom" id="scoreDenom">/5</span>
+          <span class="score-denom" id="scoreDenom">/26</span>
         </div>
         <div class="score-pct" id="scorePct">0%</div>
       </div>
@@ -442,38 +442,254 @@ p.sub { font-size: 14px; color: var(--grey); font-weight: 500; margin-bottom: 20
  
 <script>
 const subjectName = "English"
-const chapterName = "Tenses"
+const chapterName = "Mixed"
  
 const quizData = [
   {
-    question: "She ____ to school every day.",
-    options: ["go","goes","going","gone"],
-    correctIndex: 1,
-    explanation: "'She' is third-person singular — we add -s/es to the verb in simple present tense."
+    question: "What does the phrase \"grassy and wanted wear\" symbolize in the poem?",
+    options: [
+      "A choice between two equally good options",
+      "An option that was tempting and needed to be tried",
+      "A road that had been trodden black",
+      "A road that was frequently used by travellers"
+    ],
+    correct: "An option that was tempting and needed to be tried",
+    explanation: "In the poem, the grassy path that \"wanted wear\" represents a path or choice that was appealing to the narrator because it was tempting and needed to be experienced."
   },
   {
-    question: "I ____ my homework yesterday.",
-    options: ["did","do","done","doing"],
-    correctIndex: 0,
-    explanation: "'Yesterday' signals simple past. 'Did' is the past tense form of 'do'."
+    question: "What is the rhyme scheme of the first and second stanzas of the poem \"The Road Not Taken\"?",
+    options: ["abba and abba", "aabb and aabb", "abaab and abaab", "ababcd and ababcd"],
+    correct: "abaab and abaab",
+    explanation: "Both the first and second stanzas of the poem follow a uniform rhyme scheme of abaab."
   },
   {
-    question: "They ____ playing football right now.",
-    options: ["is","am","are","be"],
-    correctIndex: 2,
-    explanation: "Plural subjects like 'they' use 'are' in present continuous tense."
+    question: "Why does the traveller doubt that he shall ever come back to take the first road?",
+    options: [
+      "He forgot the way back to the diverging roads.",
+      "He feels that he will be so busy in life with one thing leading to another that he may not ever come back.",
+      "The first road was completely destroyed by the autumn weather.",
+      "He found a better destination at the end of the second road."
+    ],
+    correct: "He feels that he will be so busy in life with one thing leading to another that he may not ever come back.",
+    explanation: "The traveller understands how \"way leads on to way,\" realizing that the choices he makes will keep him busy and lead to new paths, making it unlikely he will ever return to his original starting point."
   },
   {
-    question: "We ____ dinner at this moment.",
-    options: ["eat","eats","are eating","ate"],
-    correctIndex: 2,
-    explanation: "'At this moment' shows an ongoing action — use present continuous 'are eating'."
+    question: "Which of the following pairs represents the correct rhyming words from the poem \"Silver\"?",
+    options: ["dog and log", "moon and catch", "trees and gleam", "deep and eye"],
+    correct: "dog and log",
+    explanation: "The poem features rhyming pairs such as moon-shoon, sees-trees, catch-thatch, log-dog, deep-sleep, by-eye, and gleam-stream."
   },
   {
-    question: "He ____ a movie tomorrow evening.",
-    options: ["watch","watched","will watch","watching"],
-    correctIndex: 2,
-    explanation: "'Tomorrow' points to the future — 'will watch' is the correct future simple form."
+    question: "How did the smaller of the two girls irritate the bachelor in the train compartment?",
+    options: [
+      "She kept smacking the cushions of the seats.",
+      "She began to recite the first line of the poem 'On the Road to Mandalay' over and over again.",
+      "She kept asking him questions about the sheep in the field.",
+      "She clinked her medals together loudly."
+    ],
+    correct: "She began to recite the first line of the poem 'On the Road to Mandalay' over and over again.",
+    explanation: "The smaller girl only knew the first line of the poem, but she repeated it continuously in a dreamy but resolute and very audible voice, which irritated the bachelor."
+  },
+  {
+    question: "Why did the aunt have to use the word \"Don't\" so often with the children?",
+    options: [
+      "The children were trying to open the compartment door.",
+      "The children were bothering the bachelor for stories.",
+      "The children were bored, restless, and indulging in irritating activities like smacking the cushions.",
+      "The children were eating all the flowers in the field."
+    ],
+    correct: "The children were bored, restless, and indulging in irritating activities like smacking the cushions.",
+    explanation: "Because the children were restless and engaged in annoying behavior, the aunt repeatedly had to instruct them to stop what they were doing."
+  },
+  {
+    question: "How many occupants did the train compartment have in total?",
+    options: ["Three", "Four", "Five", "Six"],
+    correct: "Five",
+    explanation: "The train compartment was occupied by a total of five individuals."
+  },
+  {
+    question: "What did the enormous wolf do to catch Bertha?",
+    options: [
+      "It waited for her outside the park gates.",
+      "It came after her with huge leaps and bounds.",
+      "It followed the sound of her crying.",
+      "It dug a trap in the myrtle bushes."
+    ],
+    correct: "It came after her with huge leaps and bounds.",
+    explanation: "When the wolf came prowling into the park, it pursued Bertha by taking huge leaps and bounds toward her."
+  },
+  {
+    question: "Where did Bertha hide to escape the enormous wolf?",
+    options: [
+      "Behind a large oak tree.",
+      "Inside a hollow log.",
+      "In one of the thickest of the myrtle bushes.",
+      "In a small cave near the river."
+    ],
+    correct: "In one of the thickest of the myrtle bushes.",
+    explanation: "Bertha managed to reach a shrubbery and successfully hid herself inside one of the thickest myrtle bushes."
+  },
+  {
+    question: "What word should the writer have avoided using when making his request to see the bank manager?",
+    options: ["Private", "Secret", "Account", "Alone"],
+    correct: "Alone",
+    explanation: "The writer's use of the word \"alone\" was inappropriate for the situation and contributed to the misunderstanding."
+  },
+  {
+    question: "Why was the bank manager alarmed by the narrator?",
+    options: [
+      "The narrator tried to step into the bank safe.",
+      "The manager felt that the writer had some awful secret to reveal.",
+      "The narrator yelled at the accountant.",
+      "The manager saw that the narrator was carrying a weapon."
+    ],
+    correct: "The manager felt that the writer had some awful secret to reveal.",
+    explanation: "Because of the narrator's nervous and secretive behavior, the manager assumed the narrator was hiding an awful secret."
+  },
+  {
+    question: "What error did the author make when writing the cheque to withdraw his money?",
+    options: [
+      "He forgot to sign his name.",
+      "He wrote a cheque for fifty-six dollars instead of six dollars.",
+      "He wrote the cheque to the wrong bank.",
+      "He left the amount section completely blank."
+    ],
+    correct: "He wrote a cheque for fifty-six dollars instead of six dollars.",
+    explanation: "In his nervousness, the author accidentally wrote the full amount of his deposit (fifty-six dollars) on the withdrawal cheque instead of the small amount (six dollars) he actually intended to take out."
+  },
+  {
+    question: "Who did the manager mistakenly think his visitor was?",
+    options: [
+      "A wealthy millionaire",
+      "A government tax auditor",
+      "One of Pinkerton's men",
+      "A new bank teller"
+    ],
+    correct: "One of Pinkerton's men",
+    explanation: "The manager mistakenly assumed the secretive narrator was a detective working for Pinkerton's agency."
+  },
+  {
+    question: "What did the Stranger-man do after looking at the picture Taffy drew?",
+    options: [
+      "He tore the bark into pieces.",
+      "He raced off into the bushes like the wind.",
+      "He attacked Tegumai with his spear.",
+      "He started fishing in the river."
+    ],
+    correct: "He raced off into the bushes like the wind.",
+    explanation: "After nodding very hard at the picture, the Stranger-man immediately raced off into the bushes like the wind to deliver it."
+  },
+  {
+    question: "What was Tegumai's broken spear originally made of?",
+    options: [
+      "Solid iron with a wooden handle",
+      "Wood with a shark's tooth at the end",
+      "Bamboo with a sharpened stone",
+      "Animal bone with a leather grip"
+    ],
+    correct: "Wood with a shark's tooth at the end",
+    explanation: "Tegumai's spear was constructed out of wood and featured shark's teeth attached to the end."
+  },
+  {
+    question: "What is the meaning behind the name \"Teshumai Tewindrow\"?",
+    options: [
+      "Man who does not put his foot forward in a hurry",
+      "Small person without any manners",
+      "Lady who asks very many questions",
+      "Woman who weaves beautiful baskets"
+    ],
+    correct: "Lady who asks very many questions",
+    explanation: "The name Teshumai Tewindrow translates to a curious or inquisitive \"Lady who asks very many questions.\""
+  },
+  {
+    question: "Which of the following describes the style of Syed Haider Raza's paintings?",
+    options: [
+      "Lifelike human figures",
+      "Copies of his environment",
+      "Abstract style",
+      "Realistic portraits"
+    ],
+    correct: "Abstract style",
+    explanation: "Raza's paintings do not depict lifelike human figures or scenes copied from his environment; instead, they are created in the abstract style."
+  },
+  {
+    question: "What specific element became the central core of Raza's paintings?",
+    options: ["The human eye", "The 'bindu' or point", "The rising sun", "The lotus flower"],
+    correct: "The 'bindu' or point",
+    explanation: "The 'bindu', which translates to a point or dot, became the fundamental core focus of Raza's artwork."
+  },
+  {
+    question: "What are the important features of traditional Gond art?",
+    options: [
+      "Digital illustration and modern software",
+      "Natural techniques of preparing colours and the use of several mediums",
+      "Creating lifelike sculptures of human figures",
+      "Using synthetic paints on large canvas boards"
+    ],
+    correct: "Natural techniques of preparing colours and the use of several mediums",
+    explanation: "Gond art is characterized by its natural techniques for preparing colours, its use of multiple mediums, and the fact that these techniques are transferred smoothly from generation to generation."
+  },
+  {
+    question: "Identify the gerund in the following sentence: \"The roots of folk arts lie in women's chores like cleaning.\"",
+    options: ["roots", "arts", "chores", "cleaning"],
+    correct: "cleaning",
+    explanation: "A gerund is a verb ending in \"-ing\" that functions as a noun. In this sentence, \"cleaning\" operates as the object of the preposition \"like\"."
+  },
+  {
+    question: "Select the grammatically correct version: \"She is the most beautifullest Mummy there ever was.\"",
+    options: [
+      "She is the more beautiful Mummy there ever was.",
+      "She is the most beautiful Mummy there ever was.",
+      "She is the beautifullest Mummy there ever was.",
+      "She is a most beautiful Mummy there ever was."
+    ],
+    correct: "She is the most beautiful Mummy there ever was.",
+    explanation: "Using \"most\" alongside \"beautifullest\" is a double superlative. The correct superlative form of \"beautiful\" is simply \"most beautiful\"."
+  },
+  {
+    question: "Change the voice: \"The birch-bark was handed to Teshumai by the Stranger-Man.\"",
+    options: [
+      "Teshumai handed the birch-bark to the Stranger-Man.",
+      "The birch-bark handed the Stranger-Man to Teshumai.",
+      "The Stranger-Man handed the birch-bark to Teshumai.",
+      "The Stranger-Man was handed the birch-bark by Teshumai."
+    ],
+    correct: "The Stranger-Man handed the birch-bark to Teshumai.",
+    explanation: "The original sentence is in the passive voice. To convert it to active voice, the subject performing the action (\"The Stranger-Man\") is moved to the beginning of the sentence."
+  },
+  {
+    question: "Rewrite using indirect speech: \"Were there any sheep in the park?\" demanded Cyril.",
+    options: [
+      "Cyril demanded if there were any sheep in the park.",
+      "Cyril asked in a demanding tone if there were any sheep in the park.",
+      "Cyril said were there any sheep in the park.",
+      "Cyril demanded to know are there any sheep in the park."
+    ],
+    correct: "Cyril asked in a demanding tone if there were any sheep in the park.",
+    explanation: "When converting a direct question into indirect speech, the quotation marks are removed, the reporting verb is adjusted to reflect the tone, and the tense is appropriately shifted."
+  },
+  {
+    question: "Identify the correct spelling of the following word: renouned",
+    options: ["renouned", "renowned", "renounned", "renownned"],
+    correct: "renowned",
+    explanation: "The correct proper English spelling is \"renowned\"."
+  },
+  {
+    question: "What is the correct antonym for the word \"withdraw\"?",
+    options: ["deduct", "remove", "deposit", "transfer"],
+    correct: "deposit",
+    explanation: "In a banking context, the opposite of taking money out (withdrawing) is putting money in (depositing)."
+  },
+  {
+    question: "What is TTC?",
+    options: [
+      "Tushar Training Center",
+      "The Tuition Classes",
+      "Tushar Tuition Classes",
+      "Total Teaching Center"
+    ],
+    correct: "Tushar Tuition Classes",
+    explanation: "TTC stands for Tushar Tuition Classes."
   }
 ]
  
@@ -521,7 +737,7 @@ function startQuiz() {
  
 function loadQuestion() {
   const q = questions[index]
-  const opts = shuffle(q.options)
+  const opts = shuffle([...q.options])
  
   document.getElementById("qCounter").innerText = `Q ${index+1} / ${questions.length}`
   document.getElementById("qScore").innerText = `Score: ${score}`
@@ -545,9 +761,8 @@ function loadQuestion() {
  
 function selectOption(el, opt, q) {
   document.querySelectorAll(".option").forEach(o => o.onclick = null)
-  const correct = q.options[q.correctIndex]
  
-  if (opt === correct) {
+  if (opt === q.correct) {
     el.classList.add("correct")
     score++
     confetti({
@@ -557,7 +772,7 @@ function selectOption(el, opt, q) {
   } else {
     el.classList.add("wrong")
     document.querySelectorAll(".option").forEach(o => {
-      if (o.querySelector(".opt-text")?.innerText.trim() === correct) o.classList.add("correct")
+      if (o.querySelector(".opt-text")?.innerText.trim() === q.correct) o.classList.add("correct")
     })
   }
  
@@ -575,17 +790,18 @@ function nextQuestion() {
  
 function showResult() {
   show("resultScreen")
-  const pct = Math.round((score / questions.length) * 100)
+  const total = questions.length
+  const pct = Math.round((score / total) * 100)
  
   document.getElementById("scoreNum").innerText = score
-  document.getElementById("scoreDenom").innerText = `/${questions.length}`
+  document.getElementById("scoreDenom").innerText = `/${total}`
   document.getElementById("scorePct").innerText = pct + "%"
  
   let emoji, title, msg, chipText, pctBg
  
   if (pct >= 90) {
     emoji = "🔥"; title = "Absolutely Smashed It!"; pctBg = "#EAFFDA"
-    msg = "Perfect! You clearly know your tenses, " + username + ". Top of the class!"
+    msg = "Perfect! Outstanding performance, " + username + ". Top of the class!"
     chipText = "✦ Outstanding"
   } else if (pct >= 75) {
     emoji = "💪"; title = "Really Well Done!"; pctBg = "#E0F0FF"
@@ -597,7 +813,7 @@ function showResult() {
     chipText = "✦ Keep Going"
   } else {
     emoji = "🧐"; title = "Time to Revise!"; pctBg = "#FFEAEA"
-    msg = "Don't worry, " + username + " — go through the chapter once more and try again!"
+    msg = "Don't worry, " + username + " — go through the chapters once more and try again!"
     chipText = "✦ Try Again"
   }
  
