@@ -122,7 +122,6 @@ pointer-events:none;
 <div class="app">
 
 <!-- NAME SCREEN -->
-
 <div id="nameScreen" class="card">
 
 <img src="https://i.ibb.co/dsBdtCwK/Ttc-logo.png" class="logo">
@@ -140,7 +139,6 @@ style="padding:10px;width:90%;border-radius:8px;border:1px solid #ccc">
 
 
 <!-- WELCOME -->
-
 <div id="welcomeScreen" class="card hidden">
 
 <img src="https://i.ibb.co/dsBdtCwK/Ttc-logo.png" class="logo">
@@ -157,7 +155,6 @@ style="padding:10px;width:90%;border-radius:8px;border:1px solid #ccc">
 
 
 <!-- QUIZ -->
-
 <div id="quizScreen" class="card hidden">
 
 <img src="https://i.ibb.co/dsBdtCwK/Ttc-logo.png" class="logo">
@@ -182,7 +179,6 @@ Next Question
 
 
 <!-- RESULT -->
-
 <div id="resultScreen" class="card hidden">
 
 <img src="https://i.ibb.co/dsBdtCwK/Ttc-logo.png" class="logo">
@@ -205,6 +201,13 @@ Click Me
 
 <br><br>
 
+<!-- Reviews Section -->
+<div style="margin-top:10px;">
+  <p style="font-size:13px;color:#aaa;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">What others say</p>
+  <h3 style="margin:0 0 4px;font-size:20px;color:#333;">Loved by TTC Families ⭐</h3>
+  <p style="font-size:14px;color:#777;margin:0 0 16px;">Real reviews from our students & parents</p>
+</div>
+
 <!-- Famewall Google Reviews Widget -->
 <div class="famewall-embed" data-src="https---maps-app-goo-gl-CCkEWRVgjbvHpQmLA" data-format="grid" style="width:100%;min-height:300px;"></div>
 <script type="text/javascript" src="https://embed.famewall.io/frame.js" defer></script>
@@ -216,12 +219,10 @@ Click Me
 <script>
 
 /* QUIZ META */
-
 const subjectName="English"
 const chapterName="Tenses"
 
 /* AUTO NAME */
-
 let username=localStorage.getItem("ttc_name") || ""
 
 if(username){
@@ -229,7 +230,6 @@ document.getElementById("username").value=username
 }
 
 /* QUIZ DATA */
-
 const quizData=[
 {
 question:"She ____ to school every day.",
@@ -423,7 +423,6 @@ location.reload()
 }
 
 /* STAR PARTICLE BUTTON */
-
 document.getElementById("ratingBtn").addEventListener("click",function(e){
 
 for(let i=0;i<12;i++){
