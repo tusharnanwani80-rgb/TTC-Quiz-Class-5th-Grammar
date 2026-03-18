@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TTC Quiz – English Mixed</title>
+<title>TTC Quiz – English Grammar</title>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&family=Righteous&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <style>
@@ -424,14 +424,14 @@ p.sub { font-size: 14px; color: var(--grey); font-weight: 500; margin-bottom: 20
 .progress-track { height: 10px; background: var(--light); border-radius: 50px; border: 2px solid var(--dark); overflow: hidden; }
 .progress-fill { height: 100%; background: linear-gradient(90deg, var(--blue), var(--pink)); border-radius: 50px; width: 0%; transition: width 0.5s cubic-bezier(.34,1.2,.64,1); }
  
-.question-text { font-family: 'Righteous', cursive; font-size: 20px; color: var(--dark); line-height: 1.5; margin-bottom: 20px; min-height: 60px; text-align: left; }
+.question-text { font-family: 'Righteous', cursive; font-size: 17px; color: var(--dark); line-height: 1.5; margin-bottom: 20px; min-height: 60px; text-align: left; }
  
 .options-grid { display: flex; flex-direction: column; gap: 10px; text-align: left; }
 .option {
   display: flex; align-items: center; gap: 12px; padding: 13px 16px;
   background: var(--white); border: 2.5px solid var(--dark); border-radius: 14px;
-  cursor: pointer; font-size: 14px; font-weight: 700; color: var(--dark);
-  box-shadow: 3px 3px 0 var(--dark);
+  cursor: pointer; font-size: 13px; font-weight: 700; color: var(--dark);
+  box-shadow: 3px 3px 0 var(--dark); line-height: 1.4;
   transition: transform 0.12s, box-shadow 0.12s, background 0.15s, border-color 0.15s;
   animation: slideIn 0.3s cubic-bezier(.34,1.3,.64,1) backwards;
 }
@@ -558,14 +558,14 @@ p.sub { font-size: 14px; color: var(--grey); font-weight: 500; margin-bottom: 20
           <div class="ficon">📖</div>
           <div class="finfo">
             <div class="flabel">Subject</div>
-            <div class="fval">English · Mixed</div>
+            <div class="fval">English Grammar</div>
           </div>
         </div>
         <div class="fcard c2">
           <div class="ficon">🎯</div>
           <div class="finfo">
             <div class="flabel">Challenge</div>
-            <div class="fval">26 Questions</div>
+            <div class="fval">40 Questions</div>
           </div>
           <div class="fbadge new">NEW</div>
         </div>
@@ -651,8 +651,8 @@ p.sub { font-size: 14px; color: var(--grey); font-weight: 500; margin-bottom: 20
       <h2 id="welcomeText"></h2>
       <p class="sub">Ready to prove yourself? 💪</p>
       <div class="info-strip">
-        <div class="info-pill">📖 English – Mixed</div>
-        <div class="info-pill">26 Questions</div>
+        <div class="info-pill">📖 English – Adverbs</div>
+        <div class="info-pill">40 Questions</div>
         <div class="info-pill">🏆 Scored</div>
         <div class="info-pill">⏱ Self-paced</div>
       </div>
@@ -666,7 +666,7 @@ p.sub { font-size: 14px; color: var(--grey); font-weight: 500; margin-bottom: 20
       <img src="https://i.postimg.cc/x9mDND2Q/Ttc-logo.png" class="logo" alt="TTC">
       <div class="progress-wrap">
         <div class="progress-meta">
-          <span id="qCounter">Q 1 / 26</span>
+          <span id="qCounter">Q 1 / 40</span>
           <span id="qScore">Score: 0</span>
         </div>
         <div class="progress-track">
@@ -692,7 +692,7 @@ p.sub { font-size: 14px; color: var(--grey); font-weight: 500; margin-bottom: 20
       <div class="score-block">
         <div>
           <span class="score-number" id="scoreNum">0</span>
-          <span class="score-denom" id="scoreDenom">/26</span>
+          <span class="score-denom" id="scoreDenom">/40</span>
         </div>
         <div class="score-pct" id="scorePct">0%</div>
       </div>
@@ -872,34 +872,248 @@ document.getElementById('startBtn').addEventListener('click',()=>{
 /* ════════════════════════
    QUIZ ENGINE
 ════════════════════════ */
-const subjectName="English", chapterName="Mixed";
+const subjectName="English", chapterName="Adverbs";
 const quizData=[
-  {question:"What does the phrase \"grassy and wanted wear\" symbolize in the poem?",options:["A choice between two equally good options","An option that was tempting and needed to be tried","A road that had been trodden black","A road that was frequently used by travellers"],correct:"An option that was tempting and needed to be tried",explanation:"In the poem, the grassy path that \"wanted wear\" represents a path or choice that was appealing to the narrator because it was tempting and needed to be experienced."},
-  {question:"What is the rhyme scheme of the first and second stanzas of the poem \"The Road Not Taken\"?",options:["abba and abba","aabb and aabb","abaab and abaab","ababcd and ababcd"],correct:"abaab and abaab",explanation:"Both the first and second stanzas of the poem follow a uniform rhyme scheme of abaab."},
-  {question:"Why does the traveller doubt that he shall ever come back to take the first road?",options:["He forgot the way back to the diverging roads.","He feels that he will be so busy in life with one thing leading to another that he may not ever come back.","The first road was completely destroyed by the autumn weather.","He found a better destination at the end of the second road."],correct:"He feels that he will be so busy in life with one thing leading to another that he may not ever come back.",explanation:"The traveller understands how \"way leads on to way,\" realizing that the choices he makes will keep him busy and lead to new paths, making it unlikely he will ever return to his original starting point."},
-  {question:"Which of the following pairs represents the correct rhyming words from the poem \"Silver\"?",options:["dog and log","moon and catch","trees and gleam","deep and eye"],correct:"dog and log",explanation:"The poem features rhyming pairs such as moon-shoon, sees-trees, catch-thatch, log-dog, deep-sleep, by-eye, and gleam-stream."},
-  {question:"How did the smaller of the two girls irritate the bachelor in the train compartment?",options:["She kept smacking the cushions of the seats.","She began to recite the first line of the poem 'On the Road to Mandalay' over and over again.","She kept asking him questions about the sheep in the field.","She clinked her medals together loudly."],correct:"She began to recite the first line of the poem 'On the Road to Mandalay' over and over again.",explanation:"The smaller girl only knew the first line of the poem, but she repeated it continuously in a dreamy but resolute and very audible voice, which irritated the bachelor."},
-  {question:"Why did the aunt have to use the word \"Don't\" so often with the children?",options:["The children were trying to open the compartment door.","The children were bothering the bachelor for stories.","The children were bored, restless, and indulging in irritating activities like smacking the cushions.","The children were eating all the flowers in the field."],correct:"The children were bored, restless, and indulging in irritating activities like smacking the cushions.",explanation:"Because the children were restless and engaged in annoying behavior, the aunt repeatedly had to instruct them to stop what they were doing."},
-  {question:"How many occupants did the train compartment have in total?",options:["Three","Four","Five","Six"],correct:"Five",explanation:"The train compartment was occupied by a total of five individuals."},
-  {question:"What did the enormous wolf do to catch Bertha?",options:["It waited for her outside the park gates.","It came after her with huge leaps and bounds.","It followed the sound of her crying.","It dug a trap in the myrtle bushes."],correct:"It came after her with huge leaps and bounds.",explanation:"When the wolf came prowling into the park, it pursued Bertha by taking huge leaps and bounds toward her."},
-  {question:"Where did Bertha hide to escape the enormous wolf?",options:["Behind a large oak tree.","Inside a hollow log.","In one of the thickest of the myrtle bushes.","In a small cave near the river."],correct:"In one of the thickest of the myrtle bushes.",explanation:"Bertha managed to reach a shrubbery and successfully hid herself inside one of the thickest myrtle bushes."},
-  {question:"What word should the writer have avoided using when making his request to see the bank manager?",options:["Private","Secret","Account","Alone"],correct:"Alone",explanation:"The writer's use of the word \"alone\" was inappropriate for the situation and contributed to the misunderstanding."},
-  {question:"Why was the bank manager alarmed by the narrator?",options:["The narrator tried to step into the bank safe.","The manager felt that the writer had some awful secret to reveal.","The narrator yelled at the accountant.","The manager saw that the narrator was carrying a weapon."],correct:"The manager felt that the writer had some awful secret to reveal.",explanation:"Because of the narrator's nervous and secretive behavior, the manager assumed the narrator was hiding an awful secret."},
-  {question:"What error did the author make when writing the cheque to withdraw his money?",options:["He forgot to sign his name.","He wrote a cheque for fifty-six dollars instead of six dollars.","He wrote the cheque to the wrong bank.","He left the amount section completely blank."],correct:"He wrote a cheque for fifty-six dollars instead of six dollars.",explanation:"In his nervousness, the author accidentally wrote the full amount of his deposit (fifty-six dollars) on the withdrawal cheque instead of the small amount (six dollars) he actually intended to take out."},
-  {question:"Who did the manager mistakenly think his visitor was?",options:["A wealthy millionaire","A government tax auditor","One of Pinkerton's men","A new bank teller"],correct:"One of Pinkerton's men",explanation:"The manager mistakenly assumed the secretive narrator was a detective working for Pinkerton's agency."},
-  {question:"What did the Stranger-man do after looking at the picture Taffy drew?",options:["He tore the bark into pieces.","He raced off into the bushes like the wind.","He attacked Tegumai with his spear.","He started fishing in the river."],correct:"He raced off into the bushes like the wind.",explanation:"After nodding very hard at the picture, the Stranger-man immediately raced off into the bushes like the wind to deliver it."},
-  {question:"What was Tegumai's broken spear originally made of?",options:["Solid iron with a wooden handle","Wood with a shark's tooth at the end","Bamboo with a sharpened stone","Animal bone with a leather grip"],correct:"Wood with a shark's tooth at the end",explanation:"Tegumai's spear was constructed out of wood and featured shark's teeth attached to the end."},
-  {question:"What is the meaning behind the name \"Teshumai Tewindrow\"?",options:["Man who does not put his foot forward in a hurry","Small person without any manners","Lady who asks very many questions","Woman who weaves beautiful baskets"],correct:"Lady who asks very many questions",explanation:"The name Teshumai Tewindrow translates to a curious or inquisitive \"Lady who asks very many questions.\""},
-  {question:"Which of the following describes the style of Syed Haider Raza's paintings?",options:["Lifelike human figures","Copies of his environment","Abstract style","Realistic portraits"],correct:"Abstract style",explanation:"Raza's paintings do not depict lifelike human figures or scenes copied from his environment; instead, they are created in the abstract style."},
-  {question:"What specific element became the central core of Raza's paintings?",options:["The human eye","The 'bindu' or point","The rising sun","The lotus flower"],correct:"The 'bindu' or point",explanation:"The 'bindu', which translates to a point or dot, became the fundamental core focus of Raza's artwork."},
-  {question:"What are the important features of traditional Gond art?",options:["Digital illustration and modern software","Natural techniques of preparing colours and the use of several mediums","Creating lifelike sculptures of human figures","Using synthetic paints on large canvas boards"],correct:"Natural techniques of preparing colours and the use of several mediums",explanation:"Gond art is characterized by its natural techniques for preparing colours, its use of multiple mediums, and the fact that these techniques are transferred smoothly from generation to generation."},
-  {question:"Identify the gerund in the following sentence: \"The roots of folk arts lie in women's chores like cleaning.\"",options:["roots","arts","chores","cleaning"],correct:"cleaning",explanation:"A gerund is a verb ending in \"-ing\" that functions as a noun. In this sentence, \"cleaning\" operates as the object of the preposition \"like\"."},
-  {question:"Select the grammatically correct version: \"She is the most beautifullest Mummy there ever was.\"",options:["She is the more beautiful Mummy there ever was.","She is the most beautiful Mummy there ever was.","She is the beautifullest Mummy there ever was.","She is a most beautiful Mummy there ever was."],correct:"She is the most beautiful Mummy there ever was.",explanation:"Using \"most\" alongside \"beautifullest\" is a double superlative. The correct superlative form of \"beautiful\" is simply \"most beautiful\"."},
-  {question:"Change the voice: \"The birch-bark was handed to Teshumai by the Stranger-Man.\"",options:["Teshumai handed the birch-bark to the Stranger-Man.","The birch-bark handed the Stranger-Man to Teshumai.","The Stranger-Man handed the birch-bark to Teshumai.","The Stranger-Man was handed the birch-bark by Teshumai."],correct:"The Stranger-Man handed the birch-bark to Teshumai.",explanation:"The original sentence is in the passive voice. To convert it to active voice, the subject performing the action (\"The Stranger-Man\") is moved to the beginning of the sentence."},
-  {question:"Rewrite using indirect speech: \"Were there any sheep in the park?\" demanded Cyril.",options:["Cyril demanded if there were any sheep in the park.","Cyril asked in a demanding tone if there were any sheep in the park.","Cyril said were there any sheep in the park.","Cyril demanded to know are there any sheep in the park."],correct:"Cyril asked in a demanding tone if there were any sheep in the park.",explanation:"When converting a direct question into indirect speech, the quotation marks are removed, the reporting verb is adjusted to reflect the tone, and the tense is appropriately shifted."},
-  {question:"Identify the correct spelling of the following word: renouned",options:["renouned","renowned","renounned","renownned"],correct:"renowned",explanation:"The correct proper English spelling is \"renowned\"."},
-  {question:"What is the correct antonym for the word \"withdraw\"?",options:["deduct","remove","deposit","transfer"],correct:"deposit",explanation:"In a banking context, the opposite of taking money out (withdrawing) is putting money in (depositing)."},
-  {question:"What is TTC?",options:["Tushar Training Center","The Tuition Classes","Tushar Tuition Classes","Total Teaching Center"],correct:"Tushar Tuition Classes",explanation:"TTC stands for Tushar Tuition Classes."}
+  {
+    question:"What is the full form of TTC?",
+    options:["Tushar Training Centre","Tushar Tuition Classes","Technical Training Classes","Teachers Training College"],
+    correct:"Tushar Tuition Classes",
+    explanation:"Kya ye bhi nhi aata abb? 😒"
+  },
+  {
+    question:"Fill in the blanks: An adjective talks about a _______, while an adverb talks about a _______.",
+    options:["verb, noun","noun, verb","pronoun, noun","verb, adjective"],
+    correct:"noun, verb",
+    explanation:"Adjectives are like describing words for a person, place, or thing (a noun), like a 'red' car. Adverbs are little helpers that tell us how an action (a verb) is happening, like running 'quickly'!"
+  },
+  {
+    question:"Replace the phrase with a suitable adverb: Honesty always pays in the long run.",
+    options:["Shortly","Eventually","Quickly","Slowly"],
+    correct:"Eventually",
+    explanation:"The phrase 'in the long run' means something that will happen after a long time. The single adverb for this is eventually."
+  },
+  {
+    question:"Replace the phrase with a suitable adverb: These girls helped her without hesitation.",
+    options:["Hesitatingly","Unhesitatingly","Slowly","Badly"],
+    correct:"Unhesitatingly",
+    explanation:"When you do something without waiting or worrying, you do it unhesitatingly. It means you helped right away!"
+  },
+  {
+    question:"Replace the phrase with a suitable adverb: He performed the job in an excellent way.",
+    options:["Goodly","Excellently","Best","Better"],
+    correct:"Excellently",
+    explanation:"To change 'in an excellent way' into a single word that describes the action, we just add -ly to excellent."
+  },
+  {
+    question:"Replace the phrase with a suitable adverb: Our uncle takes us to his farm on occasions.",
+    options:["Occasions","Occasionally","Daily","Never"],
+    correct:"Occasionally",
+    explanation:"'On occasions' means it happens sometimes, but not every day. The adverb form is occasionally."
+  },
+  {
+    question:"Replace the phrase with a suitable adverb: The magician appeared on stage two times.",
+    options:["Two","Double","Twice","Second"],
+    correct:"Twice",
+    explanation:"Instead of saying 'two times', we use the special adverb twice to show how often the magician appeared."
+  },
+  {
+    question:"Replace the phrase with a suitable adverb: She answered the principal's question with fear.",
+    options:["Fearfully","Scared","Bravely","Fearing"],
+    correct:"Fearfully",
+    explanation:"If you do something 'with fear', you are doing it fearfully. The -ly suffix turns the feeling into an adverb."
+  },
+  {
+    question:"Replace the phrase with a suitable adverb: The old man advised the children in a wise manner.",
+    options:["Wisdom","Smartly","Wisely","Wise"],
+    correct:"Wisely",
+    explanation:"'In a wise manner' tells us how he advised them. Just take the adjective wise and add -ly to make it wisely!"
+  },
+  {
+    question:"Replace the phrase with a suitable adverb: The supervisor spoke to the salesman in an angry tone.",
+    options:["Angriness","Angrily","Angry","Madly"],
+    correct:"Angrily",
+    explanation:"When you speak 'in an angry tone', the adverb form is angrily. Remember to change the 'y' to 'i' before adding 'ly'."
+  },
+  {
+    question:"Replace the phrase with a suitable adverb: They looked at the broken toy with sadness in their eyes.",
+    options:["Sadly","Happy","Crying","Sad"],
+    correct:"Sadly",
+    explanation:"Looking 'with sadness' means looking sadly. It tells us the manner or how they looked at the toy."
+  },
+  {
+    question:"Replace the phrase with a suitable adverb: The players felt that the referee had judged the match in an unfair manner.",
+    options:["Unfairness","Badly","Unjustly","Unfair"],
+    correct:"Unjustly",
+    explanation:"Another word for unfair is unjust. Doing something 'in an unfair manner' means doing it unjustly or unfairly."
+  },
+  {
+    question:"Identify the type of adverb for the word in capital letters: Ria was JUST leaving.",
+    options:["Adverb of place","Adverb of time","Adverb of degree","Adverb of manner"],
+    correct:"Adverb of time",
+    explanation:"The word 'just' tells us when Ria was leaving. Because it answers the question 'when?', it is an adverb of time."
+  },
+  {
+    question:"Identify the type of adverb for the word in capital letters: He is waiting OUTSIDE.",
+    options:["Adverb of time","Adverb of manner","Adverb of place","Adverb of frequency"],
+    correct:"Adverb of place",
+    explanation:"'Outside' answers the question 'where is he waiting?'. Words that tell us where are adverbs of place."
+  },
+  {
+    question:"Identify the type of adverb for the word in capital letters: The water was EXTREMELY cold.",
+    options:["Adverb of degree","Adverb of time","Adverb of place","Adverb of frequency"],
+    correct:"Adverb of degree",
+    explanation:"'Extremely' tells us how much or to what level the water was cold. It shows the intensity, which is an adverb of degree."
+  },
+  {
+    question:"Identify the type of adverb for the word in capital letters: He is CERTAINLY attending the event.",
+    options:["Adverb of time","Adverb of degree","Adverb of affirmation","Adverb of place"],
+    correct:"Adverb of affirmation",
+    explanation:"Affirmation is a big word that means saying 'yes' or being very sure. 'Certainly' means yes, he is definitely going!"
+  },
+  {
+    question:"Identify the type of adverb for the word in capital letters: That picture was taken in the park YESTERDAY.",
+    options:["Adverb of frequency","Adverb of place","Adverb of manner","Adverb of time"],
+    correct:"Adverb of time",
+    explanation:"'Yesterday' tells us exactly when the picture was taken. It answers the question 'when?'."
+  },
+  {
+    question:"Fill in the blank with the correct degree of the adverb: I can't work any _______ (hard).",
+    options:["hard","harder","hardest","hardly"],
+    correct:"harder",
+    explanation:"When comparing how much work you are doing right now to how much you could possibly do, you use the comparative degree 'harder'."
+  },
+  {
+    question:"Fill in the blank with the correct degree of the adverb: Mother cooks fish _______ than Father. (well)",
+    options:["well","more well","better","best"],
+    correct:"better",
+    explanation:"We are comparing two people (Mother and Father). The comparative form of 'well' is an irregular word: 'better'!"
+  },
+  {
+    question:"Fill in the blank with the correct degree of the adverb: The child plays the piano _______. (well)",
+    options:["good","well","better","best"],
+    correct:"well",
+    explanation:"Here, we are not comparing the child to anyone else. We just use the normal, positive degree of the adverb, which is 'well'."
+  },
+  {
+    question:"Fill in the blank with the correct form of the adverb: The eagle circled _______ than the sparrow. (high)",
+    options:["high","higher","highest","highly"],
+    correct:"higher",
+    explanation:"Because we are comparing two birds (the eagle and the sparrow), we add -er to make it 'higher'."
+  },
+  {
+    question:"Fill in the blank with the correct form of the adverb: The cars on the road are all moving _______. (slow)",
+    options:["slow","slowly","slower","slowest"],
+    correct:"slowly",
+    explanation:"To describe how the cars are moving right now without comparing them to anything, we just add -ly to slow."
+  },
+  {
+    question:"Fill in the blank with the correct form of the adverb: The pizza was delicious; the cheese was _______ melted. (perfect)",
+    options:["perfect","perfectly","more perfect","most perfect"],
+    correct:"perfectly",
+    explanation:"We need an adverb to describe how the cheese was melted. Adding -ly to perfect gives us 'perfectly'."
+  },
+  {
+    question:"Fill in the blank with the correct form of the adverb: The band played badly in the first half, but in the second half, they had gone _______. (bad)",
+    options:["badly","more bad","worse","worst"],
+    correct:"worse",
+    explanation:"When something is bad and we compare it to a new time where it drops even lower, the comparative form of bad is 'worse'."
+  },
+  {
+    question:"Replace the phrase with a single adverb: He walked in a confident manner.",
+    options:["Confident","Confidently","Bravely","Slowly"],
+    correct:"Confidently",
+    explanation:"When you add -ly to confident, it becomes an adverb describing how he walked!"
+  },
+  {
+    question:"Replace the phrase with a single adverb: Amin visits his grandmother once a year.",
+    options:["Monthly","Daily","Yearly","Weekly"],
+    correct:"Yearly",
+    explanation:"When something happens one time every single year, like a birthday, the adverb form is 'yearly'."
+  },
+  {
+    question:"Replace the phrase with a single adverb: The cat jumped all of a sudden from the roof.",
+    options:["Quickly","Suddenly","Slowly","Happily"],
+    correct:"Suddenly",
+    explanation:"'All of a sudden' means it happened so fast it surprised you. The correct adverb for this is suddenly."
+  },
+  {
+    question:"Replace the phrase with a single adverb: Namrata cleaned the cookware with great care.",
+    options:["Careless","Caring","Carefully","Cared"],
+    correct:"Carefully",
+    explanation:"Cleaning something 'with great care' means you are doing it carefully. It shows the manner of cleaning."
+  },
+  {
+    question:"Choose the correct sentence with the adverb in the right position:",
+    options:["Mamta is friendly usually.","Mamta usually is friendly.","Mamta is usually friendly.","Usually Mamta friendly is."],
+    correct:"Mamta is usually friendly.",
+    explanation:"When a sentence uses a 'to be' verb like is, am, or are, adverbs of frequency like 'usually' should sit right after that verb."
+  },
+  {
+    question:"Choose the correct sentence with the adverb in the right position:",
+    options:["I never have been to Lucknow.","Never I have been to Lucknow.","I have never been to Lucknow.","I have been never to Lucknow."],
+    correct:"I have never been to Lucknow.",
+    explanation:"When an action has two parts like 'have been', the adverb 'never' likes to hide safely right in the middle!"
+  },
+  {
+    question:"Choose the correct sentence with the adverb in the right position:",
+    options:["Wasim helps his father in the kitchen usually.","Wasim usually helps his father in the kitchen.","Usually Wasim helps his father in the kitchen.","Wasim helps usually his father in the kitchen."],
+    correct:"Wasim usually helps his father in the kitchen.",
+    explanation:"For most action verbs like 'helps', the adverb of frequency 'usually' stands directly in front of the verb."
+  },
+  {
+    question:"Choose the correct sentence with the adverb in the right position:",
+    options:["They watch television in the afternoon never.","Never they watch television in the afternoon.","They never watch television in the afternoon.","They watch never television in the afternoon."],
+    correct:"They never watch television in the afternoon.",
+    explanation:"The adverb 'never' tells us how often they watch. It sits right in front of the main action verb 'watch'."
+  },
+  {
+    question:"Tricky Question: Read this sentence: 'The elderly gentleman was walking in the park.' Is the word 'elderly' an adjective or an adverb?",
+    options:["Adverb","Adjective","Verb","Pronoun"],
+    correct:"Adjective",
+    explanation:"This is a trick! Even though 'elderly' ends in -ly, it is describing the gentleman (a noun). Words that describe nouns are adjectives."
+  },
+  {
+    question:"Tricky Question: Choose the sentence where the adverb 'enough' is placed correctly.",
+    options:["The shoes are not enough big for me.","The shoes enough big are not for me.","The shoes are not big enough for me.","Enough big the shoes are not for me."],
+    correct:"The shoes are not big enough for me.",
+    explanation:"The adverb 'enough' is special. It always likes to sit directly AFTER the adjective or adverb it is talking about (in this case, after 'big')."
+  },
+  {
+    question:"Tricky Question: Identify the type of adverb for the word in capital letters: That is the restaurant WHERE we meet.",
+    options:["Adverb of manner","Interrogative adverb","Relative adverb","Adverb of frequency"],
+    correct:"Relative adverb",
+    explanation:"Here, 'where' is connecting two parts of the sentence together and referring back to the restaurant. This makes it a relative adverb!"
+  },
+  {
+    question:"Tricky Question: State whether the word in capital letters is an adjective or an adverb: He runs FAST.",
+    options:["Adjective","Adverb","Noun","Conjunction"],
+    correct:"Adverb",
+    explanation:"The word 'fast' doesn't change by adding -ly. Here, it describes HOW he runs (the verb), so it is acting as an adverb."
+  },
+  {
+    question:"Tricky Question: Choose the correct sentence regarding the position of the word 'only'.",
+    options:["Only he was punished because he was upset.","He is upset because only he was punished.","He is upset only because he was punished.","He is upset because he was punished only."],
+    correct:"He is upset because only he was punished.",
+    explanation:"The word 'only' should be placed right in front of the word it modifies. Here, it means he was the only person punished."
+  },
+  {
+    question:"Tricky Question: What is the correct degree of comparison for the sentence: 'Of all the players in the team, Jaya played _______.' (skillful)",
+    options:["most skillful","more skillfully","most skillfully","skillfully"],
+    correct:"most skillfully",
+    explanation:"We are comparing Jaya to ALL the players (more than two), so we use the superlative degree. We use the adverb form skillfully and add 'most'."
+  },
+  {
+    question:"Tricky Question: Complete the sentence using an adverb formed by adding a preposition to a noun: The sailors fell _______.",
+    options:["overboard","hereafter","today","sideways"],
+    correct:"overboard",
+    explanation:"'Overboard' is an adverb formed by combining the preposition 'over' with the noun 'board'. It tells us where they fell!"
+  },
+  {
+    question:"Tricky Question: In the sentence 'She ate quite quickly,' what is the word 'quite' doing?",
+    options:["Modifying a noun","Modifying a verb","Modifying an adjective","Modifying another adverb"],
+    correct:"Modifying another adverb",
+    explanation:"Adverbs can help other adverbs. 'Quickly' is an adverb, and 'quite' is another adverb that tells us exactly how quickly she ate."
+  }
 ];
  
 let username='', questions=[], qIndex=0, score=0;
